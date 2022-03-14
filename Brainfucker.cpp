@@ -58,11 +58,15 @@ int main()
             
         }
         else if (s[i] == '.') {
-            cout << b[ptr];
+            cout <<b[ptr];
         }
+        else if (s[i] == ',') {
+            cin >> b[ptr];
+        }
+
 
     }
 
-
+    
 }
 

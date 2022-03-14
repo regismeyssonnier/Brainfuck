@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include  <vector>
+#include <deque >
 using namespace std;
 
 #define SIZE_BUFFER 1024
@@ -20,14 +21,15 @@ int main()
 
         s += ifs.get();
     }
-    //cout << s << endl;
+   
     ifs.close();
 
+    deque<int> d, pd;
     vector<char>b(SIZE_BUFFER);
     int ptr = 0;
     int memo_ptr = 0;
     for (int i = 0; i < s.length(); i++) {
-        //cout << s[i] << endl;
+       
         if (s[i] == '>') {
             if (ptr < SIZE_BUFFER)
                 ++ptr;
@@ -50,11 +52,39 @@ int main()
             }
         }
         else if (s[i] == '[') {
-            memo_ptr = i;
+            if (b[ptr] == 0) {
+                
+                for (int j = i+1; j < s.length(); j++) {
+                    if (s[j] == '[') {
+                        pd.push_front(j);
+                    }
+                    else if (s[j] == ']') {
+                        if (pd.empty()) {
+                            i = j;
+                            break;
+                        }
+                        pd.pop_front();
+                    }
+                                      
+                }
+            }
+            else {
+               
+                d.push_front(i);
+                
+            }
+          
+            
         }
         else if (s[i] == ']') {
-            if(b[ptr] > 0)
-                i = memo_ptr;
+            if (b[ptr] > 0) {
+                i = d.front();
+              
+            }
+            else {
+                d.pop_front();
+               
+            }
             
         }
         else if (s[i] == '.') {
@@ -64,6 +94,7 @@ int main()
             cin >> b[ptr];
         }
 
+        
 
     }
 

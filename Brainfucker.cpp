@@ -103,9 +103,9 @@ int main()
             if (num) {
                 int  n = 0;
                 for (int j = 0; j < 10 && buff[j] != 0; ++j) {
-                    n += buff[j] - '0';
                     n *= 10;
-                    
+                    n += buff[j] - '0';
+                                 
                 }
                 b[ptr] = n;
             }

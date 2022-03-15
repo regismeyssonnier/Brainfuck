@@ -25,7 +25,7 @@ int main()
     ifs.close();
 
     deque<int> d, pd;
-    vector<char>b(SIZE_BUFFER);
+    vector<int>b(SIZE_BUFFER);
     int ptr = 0;
     int memo_ptr = 0;
     for (int i = 0; i < s.length(); i++) {
@@ -41,15 +41,11 @@ int main()
         }
         else if (s[i] == '-') {
             --b[ptr];
-            if(b[ptr] == -1){
-                b[ptr] = 255;
-            }
+            
         }
         else if (s[i] == '+') {
             ++b[ptr];
-            if (b[ptr] == 256) {
-                b[ptr] = 0;
-            }
+            
         }
         else if (s[i] == '[') {
             if (b[ptr] == 0) {
@@ -88,12 +84,42 @@ int main()
             
         }
         else if (s[i] == '.') {
-            cout <<b[ptr];
+            cout << (unsigned char)b[ptr];
         }
         else if (s[i] == ',') {
-            cin >> b[ptr];
-        }
+           
+            char buff[10] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+            cin.getline(buff, 10);
+            bool num = true;
+            for (int j = 0; j < 10 && buff[j] != 0; ++j) {
+                if(! (buff[j] >= '0' && buff[j] <= '9')) {
+                    num = false;
+                    break;
+                }
+                
+                
+            }
 
+            if (num) {
+                int  n = 0;
+                for (int j = 0; j < 10 && buff[j] != 0; ++j) {
+                    n += buff[j] - '0';
+                    n *= 10;
+                    
+                }
+                b[ptr] = n;
+            }
+            else {
+                b[ptr] = (int)buff[0];
+            }
+
+        }
+        else if (s[i] == 't') {
+            for (int j = 0; j < 10; j++) {
+                cout << (int)b[j] << " - ";
+            }cout << endl;
+            cout << ptr << endl;
+        }
         
 
     }
